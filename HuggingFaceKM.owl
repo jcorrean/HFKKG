@@ -1,0 +1,759 @@
+Claro, aquí tienes un grafo de conocimiento en formato OWL (Web Ontology Language) que representa la ontología de la base de datos de HuggingFace Hub, basándose en la información disponible hasta la fecha. Este grafo define las clases (entidades), las propiedades de los datos (atributos) y las propiedades de los objetos (relaciones) que estructuran el ecosistema de HuggingFace.
+
+```xml
+<?xml version="1.0"?>
+  <rdf:RDF
+xmlns="http://www.huggingface.com/ontology/hub#"
+xmlns:owl="http://www.w3.org/2002/07/owl#"
+xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+xmlns:xml="http://www.w3.org/XML/1998/namespace"
+xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+xml:base="http://www.huggingface.com/ontology/hub">
+  
+  <owl:Ontology rdf:about="http://www.huggingface.com/ontology/hub">
+  <rdfs:comment>An OWL ontology representing the HuggingFace Hub data model, based on available information up to June 2025.</rdfs:comment>
+  <owl:versionInfo>1.0</owl:versionInfo>
+  </owl:Ontology>
+  
+  <owl:Class rdf:about="#User">
+  <rdfs:comment>Represents an individual AI builder or user on the HuggingFace Hub.</rdfs:comment>
+  <owl:hasKey rdf:parseType="Collection">
+  <rdf:Description rdf:about="#sub"/>
+  </owl:hasKey>
+  </owl:Class>
+  
+  <owl:Class rdf:about="#Organization">
+  <rdfs:comment>Represents an organization or team on the HuggingFace Hub.</rdfs:comment>
+  <owl:hasKey rdf:parseType="Collection">
+  <rdf:Description rdf:about="#name"/>
+  </owl:hasKey>
+  </owl:Class>
+  
+  <owl:Class rdf:about="#Repository">
+  <rdfs:comment>The foundational unit of content on the HuggingFace Hub, operating on a Git-based system.</rdfs:comment>
+  <owl:hasKey rdf:parseType="Collection">
+  <rdf:Description rdf:about="#repoId"/>
+  </owl:hasKey>
+  </owl:Class>
+  
+  <owl:Class rdf:about="#Model">
+  <rdfs:comment>A machine learning model hosted on the HuggingFace Hub.</rdfs:comment>
+  <rdfs:subClassOf rdf:resource="#Repository"/>
+  </owl:Class>
+  
+  <owl:Class rdf:about="#Dataset">
+  <rdfs:comment>A dataset used for training or evaluation, hosted on the HuggingFace Hub.</rdfs:comment>
+  <rdfs:subClassOf rdf:resource="#Repository"/>
+  </owl:Class>
+  
+  <owl:Class rdf:about="#Space">
+  <rdfs:comment>An interactive AI application or demonstration hosted on the HuggingFace Hub.</rdfs:comment>
+  <rdfs:subClassOf rdf:resource="#Repository"/>
+  </owl:Class>
+  
+  <owl:Class rdf:about="#Card">
+  <rdfs:comment>A metadata descriptor (e.g., README.md) associated with a repository.</rdfs:comment>
+  </owl:Class>
+  
+  <owl:Class rdf:about="#Discussion">
+  <rdfs:comment>A conversation thread or pull request associated with a repository.</rdfs:comment>
+  </owl:Class>
+  
+  <owl:Class rdf:about="#PullRequest">
+  <rdfs:comment>A specialized type of discussion representing proposed changes to a repository.</rdfs:comment>
+  <rdfs:subClassOf rdf:resource="#Discussion"/>
+  </owl:Class>
+  
+  <owl:Class rdf:about="#Comment">
+  <rdfs:comment>An individual comment within a discussion or pull request.</rdfs:comment>
+  </owl:Class>
+  
+  <owl:Class rdf:about="#Commit">
+  <rdfs:comment>A Git commit representing a specific version of a repository's content.</rdfs:comment>
+        <owl:hasKey rdf:parseType="Collection">
+            <rdf:Description rdf:about="#sha"/>
+        </owl:hasKey>
+    </owl:Class>
+
+    <owl:Class rdf:about="#Metric">
+        <rdfs:comment>A type of evaluation metric (e.g., accuracy, WER).</rdfs:comment>
+        <owl:hasKey rdf:parseType="Collection">
+            <rdf:Description rdf:about="#metricName"/>
+        </owl:hasKey>
+    </owl:Class>
+
+    <owl:Class rdf:about="#Paper">
+        <rdfs:comment>A research paper related to a model or dataset.</rdfs:comment>
+        <owl:hasKey rdf:parseType="Collection">
+            <rdf:Description rdf:about="#arxivId"/>
+        </owl:hasKey>
+    </owl:Class>
+
+    <owl:Class rdf:about="#License">
+        <rdfs:comment>A software or data license.</rdfs:comment>
+        <owl:hasKey rdf:parseType="Collection">
+            <rdf:Description rdf:about="#licenseName"/>
+        </owl:hasKey>
+    </owl:Class>
+
+    <owl:Class rdf:about="#ResourceGroup">
+        <rdfs:comment>A group used for granular access control within an Enterprise Organization.</rdfs:comment>
+        <owl:hasKey rdf:parseType="Collection">
+            <rdf:Description rdf:about="#groupName"/>
+        </owl:hasKey>
+    </owl:Class>
+
+    <owl:Class rdf:about="#InferenceProvider">
+        <rdfs:comment>A service that provides inference capabilities for models.</rdfs:comment>
+        <owl:hasKey rdf:parseType="Collection">
+            <rdf:Description rdf:about="#providerName"/>
+        </owl:hasKey>
+    </owl:Class>
+
+    <owl:Class rdf:about="#Policy">
+        <rdfs:comment>A security or compliance policy enforced on the Hub.</rdfs:comment>
+        <owl:hasKey rdf:parseType="Collection">
+            <rdf:Description rdf:about="#policyName"/>
+        </owl:hasKey>
+    </owl:Class>
+
+    <owl:Class rdf:about="#File">
+        <rdfs:comment>A file within a repository.</rdfs:comment>
+    </owl:Class>
+
+    <owl:Class rdf:about="#EvaluationResult">
+        <rdfs:comment>A structured record of an evaluation outcome for a model.</rdfs:comment>
+    </owl:Class>
+
+    <owl:Class rdf:about="#DatasetConfig">
+        <rdfs:comment>A configuration for a dataset, defining splits or builder parameters.</rdfs:comment>
+    </owl:Class>
+
+    <owl:ObjectProperty rdf:about="#hasMember">
+        <rdfs:domain rdf:resource="#User"/>
+        <rdfs:range rdf:resource="#Organization"/>
+        <rdfs:comment>Indicates a user is a member of an organization.</rdfs:comment>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="#owns">
+        <rdfs:domain rdf:resource="#User"/>
+        <rdfs:domain rdf:resource="#Organization"/>
+        <rdfs:range rdf:resource="#Repository"/>
+        <rdfs:comment>Indicates ownership of a repository by a user or organization.</rdfs:comment>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="#hasCard">
+        <rdfs:domain rdf:resource="#Repository"/>
+        <rdfs:range rdf:resource="#Card"/>
+        <rdfs:comment>Links a repository to its descriptive metadata card.</rdfs:comment>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="#trainedOn">
+        <rdfs:domain rdf:resource="#Model"/>
+        <rdfs:range rdf:resource="#Dataset"/>
+        <rdfs:comment>Indicates a model was trained using a specific dataset.</rdfs:comment>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="#basedOn">
+        <rdfs:domain rdf:resource="#Model"/>
+        <rdfs:range rdf:resource="#Model"/>
+        <rdfs:comment>Indicates a model is built upon another base model (e.g., fine-tuned).</rdfs:comment>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="#hasMetric">
+        <rdfs:domain rdf:resource="#Model"/>
+        <rdfs:range rdf:resource="#Metric"/>
+        <rdfs:comment>Links a model to a type of evaluation metric.</rdfs:comment>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="#usesModel">
+        <rdfs:domain rdf:resource="#Space"/>
+        <rdfs:range rdf:resource="#Model"/>
+        <rdfs:comment>Indicates a Space utilizes a specific model.</rdfs:comment>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="#usesDataset">
+        <rdfs:domain rdf:resource="#Space"/>
+        <rdfs:range rdf:resource="#Dataset"/>
+        <rdfs:comment>Indicates a Space utilizes a specific dataset.</rdfs:comment>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="#relatedToPaper">
+        <rdfs:domain rdf:resource="#Dataset"/>
+        <rdfs:domain rdf:resource="#Model"/>
+        <rdfs:range rdf:resource="#Paper"/>
+        <rdfs:comment>Links a dataset or model to an associated research paper.</rdfs:comment>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="#hasDiscussion">
+        <rdfs:domain rdf:resource="#Repository"/>
+        <rdfs:range rdf:resource="#Discussion"/>
+        <rdfs:comment>Links a repository to its discussions or pull requests.</rdfs:comment>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="#initiatedBy">
+        <rdfs:domain rdf:resource="#User"/>
+        <rdfs:range rdf:resource="#Discussion"/>
+        <rdfs:comment>Indicates the user who initiated a discussion or pull request.</rdfs:comment>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="#hasComment">
+        <rdfs:domain rdf:resource="#Discussion"/>
+        <rdfs:range rdf:resource="#Comment"/>
+        <rdfs:comment>Links a discussion to its comments.</rdfs:comment>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="#authoredBy">
+        <rdfs:domain rdf:resource="#User"/>
+        <rdfs:range rdf:resource="#Comment"/>
+        <rdfs:comment>Indicates the user who authored a comment.</rdfs:comment>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="#repliesTo">
+        <rdfs:domain rdf:resource="#Comment"/>
+        <rdfs:range rdf:resource="#Comment"/>
+        <rdfs:comment>Indicates a comment is a reply to another comment, forming a thread.</rdfs:comment>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="#hasCommit">
+        <rdfs:domain rdf:resource="#Repository"/>
+        <rdfs:range rdf:resource="#Commit"/>
+        <rdfs:comment>Links a repository to its commit history.</rdfs:comment>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="#parentCommit">
+        <rdfs:domain rdf:resource="#Commit"/>
+        <rdfs:range rdf:resource="#Commit"/>
+        <rdfs:comment>Links a commit to its parent commit(s) in the Git history.</rdfs:comment>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="#authoredCommit">
+        <rdfs:domain rdf:resource="#User"/>
+        <rdfs:range rdf:resource="#Commit"/>
+        <rdfs:comment>Indicates the user who authored a commit.</rdfs:comment>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="#mergedCommit">
+        <rdfs:domain rdf:resource="#PullRequest"/>
+        <rdfs:range rdf:resource="#Commit"/>
+        <rdfs:comment>Links a pull request to the commit(s) it introduced upon merging.</rdfs:comment>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="#modifiesFile">
+        <rdfs:domain rdf:resource="#Commit"/>
+        <rdfs:range rdf:resource="#File"/>
+        <rdfs:comment>Indicates a commit modified a specific file.</rdfs:comment>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="#hasLicense">
+        <rdfs:domain rdf:resource="#Repository"/>
+        <rdfs:range rdf:resource="#License"/>
+        <rdfs:comment>Links a repository to its associated license.</rdfs:comment>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="#belongsToGroup">
+        <rdfs:domain rdf:resource="#User"/>
+        <rdfs:range rdf:resource="#ResourceGroup"/>
+        <rdfs:comment>Indicates a user belongs to a resource group for access control.</rdfs:comment>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="#managesResources">
+        <rdfs:domain rdf:resource="#ResourceGroup"/>
+        <rdfs:range rdf:resource="#Repository"/>
+        <rdfs:comment>Indicates a resource group manages access to specific repositories.</rdfs:comment>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="#providesInferenceFor">
+        <rdfs:domain rdf:resource="#InferenceProvider"/>
+        <rdfs:range rdf:resource="#Model"/>
+        <rdfs:comment>Links an inference provider to the models it supports.</rdfs:comment>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="#enforcesPolicy">
+        <rdfs:domain rdf:resource="#Organization"/>
+        <rdfs:range rdf:resource="#Policy"/>
+        <rdfs:comment>Indicates an organization enforces a specific security or compliance policy.</rdfs:comment>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="#hasEvaluationResult">
+        <rdfs:domain rdf:resource="#Model"/>
+        <rdfs:range rdf:resource="#EvaluationResult"/>
+        <rdfs:comment>Links a model to its evaluation outcomes.</rdfs:comment>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="#hasConfig">
+        <rdfs:domain rdf:resource="#Dataset"/>
+        <rdfs:range rdf:resource="#DatasetConfig"/>
+        <rdfs:comment>Links a dataset to its specific configurations (e.g., data splits).</rdfs:comment>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="#referencesFile">
+        <rdfs:domain rdf:resource="#DatasetConfig"/>
+        <rdfs:range rdf:resource="#File"/>
+        <rdfs:comment>Links a dataset configuration to the data files it references.</rdfs:comment>
+    </owl:ObjectProperty>
+
+    <owl:DatatypeProperty rdf:about="#sub">
+        <rdfs:domain rdf:resource="#User"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment>Unique identifier for the user (OpenID Connect ID).</rdfs:comment>
+    </owl:DatatypeProperty>
+    <owl:DatatypeProperty rdf:about="#preferredUsername">
+        <rdfs:domain rdf:resource="#User"/>
+        <rdfs:domain rdf:resource="#Organization"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment>The user's or organization's username.</rdfs:comment>
+    </owl:DatatypeProperty>
+    <owl:DatatypeProperty rdf:about="#name">
+        <rdfs:domain rdf:resource="#User"/>
+        <rdfs:domain rdf:resource="#Organization"/>
+        <rdfs:domain rdf:resource="#Metric"/>
+        <rdfs:domain rdf:resource="#License"/>
+        <rdfs:domain rdf:resource="#ResourceGroup"/>
+        <rdfs:domain rdf:resource="#InferenceProvider"/>
+        <rdfs:domain rdf:resource="#Policy"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment>The full name of the user, organization, or the name of a metric, license, group, provider, or policy.</rdfs:comment>
+    </owl:DatatypeProperty>
+    <owl:DatatypeProperty rdf:about="#email">
+        <rdfs:domain rdf:resource="#User"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment>The user's email address.</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#isPro">
+  <rdfs:domain rdf:resource="#User"/>
+  <rdfs:range rdf:resource="&xsd;boolean"/>
+  <rdfs:comment>Indicates if the user is a pro subscriber.</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#picture">
+  <rdfs:domain rdf:resource="#User"/>
+  <rdfs:domain rdf:resource="#Organization"/>
+  <rdfs:range rdf:resource="&xsd;anyURI"/>
+  <rdfs:comment>URL to the user's or organization's profile picture.</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#profile">
+  <rdfs:domain rdf:resource="#User"/>
+  <rdfs:range rdf:resource="&xsd;anyURI"/>
+  <rdfs:comment>URL to the user's profile page.</rdfs:comment>
+    </owl:DatatypeProperty>
+    <owl:DatatypeProperty rdf:about="#website">
+        <rdfs:domain rdf:resource="#User"/>
+        <rdfs:range rdf:resource="&xsd;anyURI"/>
+        <rdfs:comment>The user's personal website URL.</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#canPay">
+  <rdfs:domain rdf:resource="#User"/>
+  <rdfs:domain rdf:resource="#Organization"/>
+  <rdfs:range rdf:resource="&xsd;boolean"/>
+  <rdfs:comment>Indicates if the user or organization has a payment method set up.</rdfs:comment>
+  </owl:DatatypeProperty>
+  
+  <owl:DatatypeProperty rdf:about="#isEnterprise">
+  <rdfs:domain rdf:resource="#Organization"/>
+  <rdfs:range rdf:resource="&xsd;boolean"/>
+  <rdfs:comment>Indicates if the organization is an Enterprise organization.</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#missingMFA">
+  <rdfs:domain rdf:resource="#Organization"/>
+  <rdfs:range rdf:resource="&xsd;boolean"/>
+  <rdfs:comment>Indicates if the organization is missing MFA configuration.</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#pendingSSO">
+  <rdfs:domain rdf:resource="#Organization"/>
+  <rdfs:range rdf:resource="&xsd;boolean"/>
+  <rdfs:comment>Indicates if the organization has pending SSO configuration.</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#domainName">
+  <rdfs:domain rdf:resource="#Organization"/>
+  <rdfs:range rdf:resource="&xsd;string"/>
+  <rdfs:comment>The domain name associated with the organization for SSO.</rdfs:comment>
+  </owl:DatatypeProperty>
+  
+  <owl:DatatypeProperty rdf:about="#repoId">
+  <rdfs:domain rdf:resource="#Repository"/>
+  <rdfs:range rdf:resource="&xsd;string"/>
+  <rdfs:comment>The unique identifier for the repository (namespace/repo_name).</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#private">
+  <rdfs:domain rdf:resource="#Repository"/>
+  <rdfs:range rdf:resource="&xsd;boolean"/>
+  <rdfs:comment>Indicates if the repository is private.</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#createdAt">
+  <rdfs:domain rdf:resource="#Repository"/>
+  <rdfs:domain rdf:resource="#Comment"/>
+  <rdfs:range rdf:resource="&xsd;dateTime"/>
+  <rdfs:comment>Timestamp when the repository or comment was created.</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#lastModified">
+  <rdfs:domain rdf:resource="#Repository"/>
+  <rdfs:domain rdf:resource="#File"/>
+  <rdfs:domain rdf:resource="#Card"/>
+  <rdfs:domain rdf:resource="#Comment"/>
+  <rdfs:range rdf:resource="&xsd;dateTime"/>
+  <rdfs:comment>Timestamp of the last modification to the repository, file, card, or comment.</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#downloads">
+  <rdfs:domain rdf:resource="#Repository"/>
+  <rdfs:range rdf:resource="&xsd;integer"/>
+  <rdfs:comment>The number of downloads for the repository.</rdfs:comment>
+  </owl:DatatypeProperty>
+  
+  <owl:DatatypeProperty rdf:about="#modelId">
+  <rdfs:domain rdf:resource="#Model"/>
+  <rdfs:range rdf:resource="&xsd;string"/>
+  <rdfs:comment>The human-readable name or identifier for the model.</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#pipelineTag">
+  <rdfs:domain rdf:resource="#Model"/>
+  <rdfs:range rdf:resource="&xsd;string"/>
+  <rdfs:comment>The type of task the model is intended for (e.g., "text-generation").</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#libraryName">
+  <rdfs:domain rdf:resource="#Model"/>
+  <rdfs:range rdf:resource="&xsd;string"/>
+  <rdfs:comment>The machine learning library used by the model (e.g., "transformers", "keras").</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#maxShardSize">
+  <rdfs:domain rdf:resource="#Model"/>
+  <rdfs:range rdf:resource="&xsd;string"/>
+  <rdfs:comment>The maximum size for a model checkpoint before sharding (e.g., "5GB").</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#safeSerialization">
+  <rdfs:domain rdf:resource="#Model"/>
+  <rdfs:range rdf:resource="&xsd;boolean"/>
+  <rdfs:comment>Indicates if the model weights are in safetensors format for safer serialization.</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#thumbnailUrl">
+  <rdfs:domain rdf:resource="#Model"/>
+  <rdfs:domain rdf:resource="#Space"/>
+  <rdfs:range rdf:resource="&xsd;anyURI"/>
+  <rdfs:comment>URL to a thumbnail image for the model or space.</rdfs:comment>
+  </owl:DatatypeProperty>
+  
+  <owl:DatatypeProperty rdf:about="#prettyName">
+  <rdfs:domain rdf:resource="#Dataset"/>
+  <rdfs:range rdf:resource="&xsd;string"/>
+  <rdfs:comment>A more human-readable name for the dataset.</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#modality">
+  <rdfs:domain rdf:resource="#Dataset"/>
+  <rdfs:range rdf:resource="&xsd;string"/>
+  <rdfs:comment>The data modality of the dataset (e.g., "audio", "image", "text").</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#viewerEnabled">
+  <rdfs:domain rdf:resource="#Dataset"/>
+  <rdfs:range rdf:resource="&xsd;boolean"/>
+  <rdfs:comment>Indicates if the dataset viewer is enabled for the dataset.</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#sqlConsoleEnabled">
+  <rdfs:domain rdf:resource="#Dataset"/>
+  <rdfs:range rdf:resource="&xsd;boolean"/>
+  <rdfs:comment>Indicates if the SQL console is enabled for the dataset.</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#streamingEnabled">
+  <rdfs:domain rdf:resource="#Dataset"/>
+  <rdfs:range rdf:resource="&xsd;boolean"/>
+  <rdfs:comment>Indicates if dataset streaming is enabled.</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#taskCategories">
+  <rdfs:domain rdf:resource="#Dataset"/>
+  <rdfs:range rdf:resource="&xsd;string"/>
+  <rdfs:comment>A list of task categories supported by the dataset (stored as a string, e.g., "['text-classification', 'question-answering']").</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#taskIds">
+  <rdfs:domain rdf:resource="#Dataset"/>
+  <rdfs:range rdf:resource="&xsd;string"/>
+  <rdfs:comment>A list of specific tasks supported by the dataset (stored as a string).</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#annotationsCreators">
+  <rdfs:domain rdf:resource="#Dataset"/>
+  <rdfs:range rdf:resource="&xsd;string"/>
+  <rdfs:comment>How annotations for the dataset were created (stored as a string, e.g., "['crowdsourced']").</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#languageCreators">
+  <rdfs:domain rdf:resource="#Dataset"/>
+  <rdfs:range rdf:resource="&xsd;string"/>
+  <rdfs:comment>How text-based data in the dataset was created (stored as a string).</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#multilinguality">
+  <rdfs:domain rdf:resource="#Dataset"/>
+  <rdfs:range rdf:resource="&xsd;string"/>
+  <rdfs:comment>Whether the dataset is multilingual (stored as a string, e.g., "monolingual", "multilingual").</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#sizeCategories">
+  <rdfs:domain rdf:resource="#Dataset"/>
+  <rdfs:range rdf:resource="&xsd;string"/>
+  <rdfs:comment>The number of examples in the dataset (stored as a string, e.g., "n<1K", "1K<n<10K").</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#sourceDatasets">
+  <rdfs:domain rdf:resource="#Dataset"/>
+  <rdfs:range rdf:resource="&xsd;string"/>
+  <rdfs:comment>Indicates if the dataset is original or extended from another (stored as a string, e.g., "['original']").</rdfs:comment>
+  </owl:DatatypeProperty>
+  
+  <owl:DatatypeProperty rdf:about="#sdk">
+  <rdfs:domain rdf:resource="#Space"/>
+  <rdfs:range rdf:resource="&xsd;string"/>
+  <rdfs:comment>The SDK used for the Space (e.g., "gradio", "streamlit", "docker").</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#sdkVersion">
+  <rdfs:domain rdf:resource="#Space"/>
+  <rdfs:range rdf:resource="&xsd;string"/>
+  <rdfs:comment>The version of the SDK used.</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#pythonVersion">
+  <rdfs:domain rdf:resource="#Space"/>
+  <rdfs:range rdf:resource="&xsd;string"/>
+  <rdfs:comment>The Python version used in the Space.</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#appFile">
+  <rdfs:domain rdf:resource="#Space"/>
+  <rdfs:range rdf:resource="&xsd;string"/>
+  <rdfs:comment>Path to the main application file within the Space repository.</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#appPort">
+  <rdfs:domain rdf:resource="#Space"/>
+  <rdfs:range rdf:resource="&xsd;integer"/>
+  <rdfs:comment>The port on which the application is running (for Docker Spaces).</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#duplicatedFrom">
+  <rdfs:domain rdf:resource="#Space"/>
+  <rdfs:range rdf:resource="&xsd;string"/>
+  <rdfs:comment>The ID of the original Space if this Space was duplicated.</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#spaceTitle">
+  <rdfs:domain rdf:resource="#Space"/>
+  <rdfs:range rdf:resource="&xsd;string"/>
+  <rdfs:comment>The title of the Space.</rdfs:comment>
+  </owl:DatatypeProperty>
+  
+  <owl:DatatypeProperty rdf:about="#cardType">
+  <rdfs:domain rdf:resource="#Card"/>
+  <rdfs:range rdf:resource="&xsd;string"/>
+  <rdfs:comment>The type of card (e.g., "Model Card", "Dataset Card", "Space Card").</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#contentHash">
+  <rdfs:domain rdf:resource="#Card"/>
+  <rdfs:range rdf:resource="&xsd;string"/>
+  <rdfs:comment>A hash of the card's content for integrity checking.</rdfs:comment>
+    </owl:DatatypeProperty>
+    <owl:DatatypeProperty rdf:about="#language">
+        <rdfs:domain rdf:resource="#Card"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment>A list of ISO 639-1 codes for the language(s) associated with the content (stored as a string, e.g., "['en', 'fr']").</rdfs:comment>
+    </owl:DatatypeProperty>
+    <owl:DatatypeProperty rdf:about="#tags">
+        <rdfs:domain rdf:resource="#Card"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment>A list of tags categorizing the content (stored as a string, e.g., "['conversational', 'nlp']").</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="#discussionNum">
+        <rdfs:domain rdf:resource="#Discussion"/>
+        <rdfs:domain rdf:resource="#Comment"/>
+        <rdfs:range rdf:resource="&xsd;integer"/>
+        <rdfs:comment>The unique number identifying a discussion or pull request within a repository.</rdfs:comment>
+    </owl:DatatypeProperty>
+    <owl:DatatypeProperty rdf:about="#discussionTitle">
+        <rdfs:domain rdf:resource="#Discussion"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment>The title of the discussion or pull request.</rdfs:comment>
+    </owl:DatatypeProperty>
+    <owl:DatatypeProperty rdf:about="#discussionDescription">
+        <rdfs:domain rdf:resource="#Discussion"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment>A detailed description of the discussion or pull request.</rdfs:comment>
+    </owl:DatatypeProperty>
+    <owl:DatatypeProperty rdf:about="#status">
+        <rdfs:domain rdf:resource="#Discussion"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment>The current status of the discussion or pull request (e.g., "open", "closed").</rdfs:comment>
+    </owl:DatatypeProperty>
+    <owl:DatatypeProperty rdf:about="#isPullRequest">
+        <rdfs:domain rdf:resource="#Discussion"/>
+        <rdfs:range rdf:resource="&xsd;boolean"/>
+        <rdfs:comment>Indicates if the discussion is a pull request.</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="#commentId">
+        <rdfs:domain rdf:resource="#Comment"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment>Unique identifier for a comment within a discussion.</rdfs:comment>
+    </owl:DatatypeProperty>
+    <owl:DatatypeProperty rdf:about="#content">
+        <rdfs:domain rdf:resource="#Comment"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment>The textual content of the comment.</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="#sha">
+        <rdfs:domain rdf:resource="#Commit"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment>The SHA hash of the Git commit.</rdfs:comment>
+    </owl:DatatypeProperty>
+    <owl:DatatypeProperty rdf:about="#message">
+        <rdfs:domain rdf:resource="#Commit"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment>The commit message summary.</rdfs:comment>
+    </owl:DatatypeProperty>
+    <owl:DatatypeProperty rdf:about="#commitDescription">
+        <rdfs:domain rdf:resource="#Commit"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment>The detailed description of the commit.</rdfs:comment>
+    </owl:DatatypeProperty>
+    <owl:DatatypeProperty rdf:about="#date">
+        <rdfs:domain rdf:resource="#Commit"/>
+        <rdfs:range rdf:resource="&xsd;dateTime"/>
+        <rdfs:comment>The date and time of the commit.</rdfs:comment>
+    </owl:DatatypeProperty>
+    <owl:DatatypeProperty rdf:about="#authorName">
+        <rdfs:domain rdf:resource="#Commit"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment>The name of the commit author.</rdfs:comment>
+    </owl:DatatypeProperty>
+    <owl:DatatypeProperty rdf:about="#authorEmail">
+        <rdfs:domain rdf:resource="#Commit"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment>The email of the commit author.</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="#metricName">
+        <rdfs:domain rdf:resource="#Metric"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment>The name of the metric (e.g., "accuracy", "WER").</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="#arxivId">
+        <rdfs:domain rdf:resource="#Paper"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment>The arXiv ID of the paper.</rdfs:comment>
+    </owl:DatatypeProperty>
+    <owl:DatatypeProperty rdf:about="#paperTitle">
+        <rdfs:domain rdf:resource="#Paper"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment>The title of the paper.</rdfs:comment>
+    </owl:DatatypeProperty>
+    <owl:DatatypeProperty rdf:about="#url">
+        <rdfs:domain rdf:resource="#Paper"/>
+        <rdfs:domain rdf:resource="#License"/>
+        <rdfs:domain rdf:resource="#EvaluationResult"/>
+        <rdfs:range rdf:resource="&xsd;anyURI"/>
+        <rdfs:comment>URL to the paper, license, or evaluation source.</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="#licenseName">
+        <rdfs:domain rdf:resource="#License"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment>The name of the license (e.g., "MIT", "Apache-2.0").</rdfs:comment>
+    </owl:DatatypeProperty>
+    <owl:DatatypeProperty rdf:about="#licenseLink">
+        <rdfs:domain rdf:resource="#License"/>
+        <rdfs:range rdf:resource="&xsd;anyURI"/>
+        <rdfs:comment>A link to the full text of the license.</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="#groupName">
+        <rdfs:domain rdf:resource="#ResourceGroup"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment>The name of the resource group.</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="#providerName">
+        <rdfs:domain rdf:resource="#InferenceProvider"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment>The name of the inference provider (e.g., "fal.ai", "Fireworks AI").</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="#policyName">
+        <rdfs:domain rdf:resource="#Policy"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment>The name of the policy (e.g., "GDPR Compliance").</rdfs:comment>
+    </owl:DatatypeProperty>
+    <owl:DatatypeProperty rdf:about="#policyType">
+        <rdfs:domain rdf:resource="#Policy"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment>The type of policy (e.g., "Regulatory", "Corporate").</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="#path">
+        <rdfs:domain rdf:resource="#File"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment>The path of the file within its repository.</rdfs:comment>
+    </owl:DatatypeProperty>
+    <owl:DatatypeProperty rdf:about="#size">
+        <rdfs:domain rdf:resource="#File"/>
+        <rdfs:range rdf:resource="&xsd;integer"/>
+        <rdfs:comment>The size of the file in bytes.</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="#taskType">
+        <rdfs:domain rdf:resource="#EvaluationResult"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment>The task identifier for the evaluation (e.g., "image-classification").</rdfs:comment>
+    </owl:DatatypeProperty>
+    <owl:DatatypeProperty rdf:about="#datasetName">
+        <rdfs:domain rdf:resource="#EvaluationResult"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment>The pretty name of the dataset used in the evaluation.</rdfs:comment>
+    </owl:DatatypeProperty>
+    <owl:DatatypeProperty rdf:about="#metricValue">
+        <rdfs:domain rdf:resource="#EvaluationResult"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment>The value of the metric (can be string for "X ± Y" format).</rdfs:comment>
+    </owl:DatatypeProperty>
+    <owl:DatatypeProperty rdf:about="#verified">
+        <rdfs:domain rdf:resource="#EvaluationResult"/>
+        <rdfs:range rdf:resource="&xsd;boolean"/>
+        <rdfs:comment>Indicates if the evaluation was generated by Hugging Face (vs. self-reported).</rdfs:comment>
+    </owl:DatatypeProperty>
+    <owl:DatatypeProperty rdf:about="#sourceName">
+        <rdfs:domain rdf:resource="#EvaluationResult"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment>The name of the evaluation result source (e.g., "Open LLM Leaderboard").</rdfs:comment>
+    </owl:DatatypeProperty>
+    <owl:DatatypeProperty rdf:about="#datasetSplit">
+        <rdfs:domain rdf:resource="#EvaluationResult"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment>The dataset split used in the evaluation (e.g., "test").</rdfs:comment>
+    </owl:DatatypeProperty>
+    <owl:DatatypeProperty rdf:about="#datasetRevision">
+        <rdfs:domain rdf:resource="#EvaluationResult"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment>The Git SHA revision of the dataset used.</rdfs:comment>
+    </owl:DatatypeProperty>
+    <owl:DatatypeProperty rdf:about="#datasetArgs">
+        <rdfs:domain rdf:resource="#EvaluationResult"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment>Arguments passed during dataset loading (stored as JSON string).</rdfs:comment>
+    </owl:DatatypeProperty>
+    <owl:DatatypeProperty rdf:about="#metricConfig">
+        <rdfs:domain rdf:resource="#EvaluationResult"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment>Name of the metric configuration used.</rdfs:comment>
+    </owl:DatatypeProperty>
+    <owl:DatatypeProperty rdf:about="#metricArgs">
+        <rdfs:domain rdf:resource="#EvaluationResult"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment>Arguments passed during metric computation (stored as JSON string).</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="#configName">
+        <rdfs:domain rdf:resource="#DatasetConfig"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment>The name of the dataset configuration.</rdfs:comment>
+    </owl:DatatypeProperty>
+    <owl:DatatypeProperty rdf:about="#isDefault">
+        <rdfs:domain rdf:resource="#DatasetConfig"/>
+        <rdfs:range rdf:resource="&xsd;boolean"/>
+        <rdfs:comment>Indicates if this is the default configuration for the dataset.</rdfs:comment>
+    </owl:DatatypeProperty>
+    <owl:DatatypeProperty rdf:about="#builderParameters">
+        <rdfs:domain rdf:resource="#DatasetConfig"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment>Parameters for the dataset builder (stored as JSON string).</rdfs:comment>
+    </owl:DatatypeProperty>
+
+</rdf:RDF>
+```
